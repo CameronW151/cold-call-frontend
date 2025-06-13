@@ -4,6 +4,7 @@ import axios from "axios";
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [viewMode, setViewMode] = useState(null); // "log" or "admin"
+  const [loginRole, setLoginRole] = useState("employee");
   const [passwordInput, setPasswordInput] = useState("");
 
   // Call form state
@@ -18,16 +19,17 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLogin = () => {
-    if (passwordInput === "silvano123") {
-      setAuthenticated(true);
-      setViewMode("log");
-    } else if (passwordInput === "admin789") {
-      setAuthenticated(true);
-      setViewMode("admin");
-    } else {
-      alert("Incorrect password");
-    }
-  };
+  if (loginRole === "employee" && passwordInput === "silvano123") {
+    setAuthenticated(true);
+    setViewMode("log");
+  } else if (loginRole === "admin" && passwordInput === "admin789") {
+    setAuthenticated(true);
+    setViewMode("admin");
+  } else {
+    alert("Incorrect password for selected role");
+  }
+};
+
 
   useEffect(() => {
     if (authenticated && viewMode === "admin") {
@@ -71,21 +73,45 @@ function App() {
 
   if (!authenticated) {
     return (
-      <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
-        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" style={{ width: "120px", marginBottom: "20px" }} />
-        <h2>🔒 Enter Password</h2>
+  <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+    <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" style={{ width: "120px", marginBottom: "20px" }} />
+    <h2>🔒 Log In</h2>
+
+    <div style={{ marginBottom: "10px", textAlign: "left" }}>
+      <label>
         <input
-          type="password"
-          value={passwordInput}
-          onChange={(e) => setPasswordInput(e.target.value)}
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-        />
-        <br />
-        <button onClick={handleLogin} style={{ padding: "10px 20px" }}>
-          Unlock
-        </button>
-      </div>
-    );
+          type="radio"
+          value="employee"
+          checked={loginRole === "employee"}
+          onChange={() => setLoginRole("employee")}
+        />{" "}
+        Employee
+      </label>
+      <br />
+      <label>
+        <input
+          type="radio"
+          value="admin"
+          checked={loginRole === "admin"}
+          onChange={() => setLoginRole("admin")}
+        />{" "}
+        Admin
+      </label>
+    </div>
+
+    <input
+      type="password"
+      value={passwordInput}
+      onChange={(e) => setPasswordInput(e.target.value)}
+      placeholder="Enter password"
+      style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+    />
+    <br />
+    <button onClick={handleLogin} style={{ padding: "10px 20px" }}>
+      Log In
+    </button>
+  </div>
+);
   }
 
   if (viewMode === "log") {
