@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
   const [form, setForm] = useState({
     employee: "",
     phone: "",
     outcome: "",
     notes: "",
   });
-
   const [status, setStatus] = useState("");
 
-  const handleChange = (e) => {
+  const correctPassword = "silvano123"; // You can change this!
+
+  const handleLogin = () => {
+    if (passwordInput === correctPassword) {
+      setAuthenticated(true);
+    } else {
+      alert("Incorrect password");
+    }
+  };
+
+  const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -36,6 +47,25 @@ function App() {
     }
   };
 
+  if (!authenticated) {
+    return (
+      <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+        <h2>🔒 Enter Password</h2>
+        <input
+          type="password"
+          placeholder="Password"
+          value={passwordInput}
+          onChange={(e) => setPasswordInput(e.target.value)}
+          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+        />
+        <br />
+        <button onClick={handleLogin} style={{ padding: "10px 20px" }}>
+          Unlock
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: "1rem", maxWidth: "400px", margin: "auto" }}>
       <h2>📞 Cold Call Tracker</h2>
@@ -44,28 +74,28 @@ function App() {
         name="employee"
         placeholder="Employee Name"
         value={form.employee}
-        onChange={handleChange}
+        onChange={handleFormChange}
         style={{ display: "block", margin: "8px 0", width: "100%" }}
       />
       <input
         name="phone"
         placeholder="Phone Number"
         value={form.phone}
-        onChange={handleChange}
+        onChange={handleFormChange}
         style={{ display: "block", margin: "8px 0", width: "100%" }}
       />
       <input
         name="outcome"
         placeholder="Outcome (Answered, Voicemail, etc)"
         value={form.outcome}
-        onChange={handleChange}
+        onChange={handleFormChange}
         style={{ display: "block", margin: "8px 0", width: "100%" }}
       />
       <textarea
         name="notes"
         placeholder="Notes"
         value={form.notes}
-        onChange={handleChange}
+        onChange={handleFormChange}
         rows={4}
         style={{ display: "block", margin: "8px 0", width: "100%" }}
       ></textarea>
