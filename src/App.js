@@ -47,24 +47,26 @@ function App() {
     }
   };
 
-  if (!authenticated) {
-    return (
-      <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
-        <h2>🔒 Enter Password</h2>
-        <input
-          type="password"
-          placeholder="Password"
-          value={passwordInput}
-          onChange={(e) => setPasswordInput(e.target.value)}
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-        />
-        <br />
-        <button onClick={handleLogin} style={{ padding: "10px 20px" }}>
-          Unlock
-        </button>
-      </div>
-    );
-  }
+if (!authenticated) {
+  return (
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
+      <img src="/logo.png" alt="SR Contractors Logo" style={{ width: "120px", marginBottom: "20px" }} />
+      <h2>🔒 Enter Password</h2>
+      <input
+        type="password"
+        placeholder="Password"
+        value={passwordInput}
+        onChange={(e) => setPasswordInput(e.target.value)}
+        style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+      />
+      <br />
+      <button onClick={handleLogin} style={{ padding: "10px 20px" }}>
+        Unlock
+      </button>
+    </div>
+  );
+}
+
 
   return (
     <div style={{ padding: "1rem", maxWidth: "400px", margin: "auto" }}>
