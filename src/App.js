@@ -13,6 +13,7 @@ function App() {
   const [outcome, setOutcome] = useState("");
   const [notes, setNotes] = useState("");
   const [submitMessage, setSubmitMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
 
   // Admin dashboard state
   const [callData, setCallData] = useState([]);
