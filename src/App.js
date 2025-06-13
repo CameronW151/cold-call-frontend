@@ -50,7 +50,7 @@ function App() {
 if (!authenticated) {
   return (
     <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto", textAlign: "center" }}>
-      <img src="/logo.png" alt="SR Contractors Logo" style={{ width: "120px", marginBottom: "20px" }} />
+      <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="SR Contractors Logo" style={{ width: "120px", marginBottom: "20px" }} />
       <h2>🔒 Enter Password</h2>
       <input
         type="password"
