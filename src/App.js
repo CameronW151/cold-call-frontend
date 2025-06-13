@@ -17,6 +17,11 @@ function App() {
   // Admin dashboard state
   const [callData, setCallData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const handleLogout = () => {
+  setAuthenticated(false);
+  setPasswordInput("");
+  setViewMode(null);
+};
 
   const handleLogin = () => {
   if (loginRole === "employee" && passwordInput === "silvano123") {
@@ -114,41 +119,71 @@ function App() {
 );
   }
 
-  if (viewMode === "log") {
-    return (
-      <div style={{ padding: "2rem", maxWidth: "600px", margin: "auto" }}>
-        <h2>📞 Log a Cold Call</h2>
-        <label>Employee*</label>
-        <input type="text" value={employee} onChange={(e) => setEmployee(e.target.value)} style={inputStyle} />
+  if (authenticated && viewMode === "log") {
+  return (
+    <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
+      <button onClick={handleLogout} style={{ marginBottom: "1rem", padding: "8px 16px" }}>
+        🔓 Log Out
+      </button>
 
-        <label>Phone*</label>
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} style={inputStyle} />
+      <h2>📞 Cold Call Logger</h2>
 
-        <label>Outcome*</label>
-        <select value={outcome} onChange={(e) => setOutcome(e.target.value)} style={inputStyle}>
-          <option value="">Select...</option>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={employee}
+          onChange={(e) => setEmployee(e.target.value)}
+          placeholder="Employee Name"
+          required
+          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+        />
+
+        <input
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Phone Number"
+          required
+          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+        />
+
+        <select
+          value={outcome}
+          onChange={(e) => setOutcome(e.target.value)}
+          required
+          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+        >
+          <option value="">Select Outcome</option>
           <option value="Answered">Answered</option>
-          <option value="Not Answered">Not Answered</option>
           <option value="Voicemail">Voicemail</option>
-          <option value="Number Not in Service">Number Not in Service</option>
+          <option value="No Answer">No Answer</option>
         </select>
 
-        <label>Notes</label>
-        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} style={inputStyle} />
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Notes"
+          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+        />
 
-        <button onClick={handleSubmit} style={{ padding: "10px 20px", marginTop: "10px" }}>
+        <button type="submit" style={{ padding: "10px 20px", width: "100%" }}>
           Log Call
         </button>
+      </form>
 
-        {submitMessage && <p style={{ marginTop: "10px" }}>{submitMessage}</p>}
-      </div>
-    );
-  }
-
+      {responseMessage && (
+        <p style={{ color: "green", marginTop: "10px" }}>{responseMessage}</p>
+      )}
+    </div>
+  );
+}
   if (viewMode === "admin") {
     return (
       <div style={{ padding: "2rem", maxWidth: "1000px", margin: "auto" }}>
         <h2>📋 Cold Call Log Dashboard</h2>
+        <button onClick={handleLogout} style={{ marginBottom: "1rem", padding: "8px 16px" }}>
+  🔓 Log Out
+</button>
         {isLoading ? (
           <p>Loading call logs...</p>
         ) : callData.length === 0 ? (
