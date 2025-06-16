@@ -119,16 +119,22 @@ function App() {
   </div>
 );
   }
-
+  
   if (authenticated && viewMode === "log") {
   return (
     <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
-      <button onClick={handleLogout} style={{ marginBottom: "1rem", padding: "8px 16px" }}>
+      {/* 🔓 Log Out Button */}
+      <button
+        type="button"
+        onClick={handleLogout}
+        style={{ marginBottom: "1rem", padding: "8px 16px" }}
+      >
         🔓 Log Out
       </button>
 
       <h2>📞 Cold Call Logger</h2>
 
+      {/* ✅ Call Logging Form */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -136,7 +142,12 @@ function App() {
           onChange={(e) => setEmployee(e.target.value)}
           placeholder="Employee Name"
           required
-          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+          style={{
+            display: "block",
+            margin: "10px 0",
+            padding: "8px",
+            width: "100%",
+          }}
         />
 
         <input
@@ -145,14 +156,24 @@ function App() {
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
           required
-          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+          style={{
+            display: "block",
+            margin: "10px 0",
+            padding: "8px",
+            width: "100%",
+          }}
         />
 
         <select
           value={outcome}
           onChange={(e) => setOutcome(e.target.value)}
           required
-          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+          style={{
+            display: "block",
+            margin: "10px 0",
+            padding: "8px",
+            width: "100%",
+          }}
         >
           <option value="">Select Outcome</option>
           <option value="Answered">Answered</option>
@@ -164,10 +185,18 @@ function App() {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Notes"
-          style={{ display: "block", margin: "10px 0", padding: "8px", width: "100%" }}
+          style={{
+            display: "block",
+            margin: "10px 0",
+            padding: "8px",
+            width: "100%",
+          }}
         />
 
-        <button type="submit" style={{ padding: "10px 20px", width: "100%" }}>
+        <button
+          type="submit"
+          style={{ padding: "10px 20px", width: "100%", backgroundColor: "#007BFF", color: "white", border: "none" }}
+        >
           Log Call
         </button>
       </form>
