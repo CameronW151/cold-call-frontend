@@ -51,31 +51,29 @@ function App() {
     }
   }, [authenticated, viewMode]);
 
-  const handleSubmit = async () => {
-    if (!employee || !phone || !outcome) {
-      alert("Please fill out all required fields.");
-      return;
-    }
+  const handleSubmit = (e) => {
+  e.preventDefault(); // Stop form reload
 
-    try {
-      const response = await axios.post("https://cold-call-backend.onrender.com/log", {
-        employee,
-        phone,
-        outcome,
-        notes,
-      });
-
-      if (response.status === 200) {
-        setSubmitMessage("✅ Call logged!");
-        setEmployee("");
-        setPhone("");
-        setOutcome("");
-        setNotes("");
-      }
-    } catch (error) {
-      setSubmitMessage("❌ Failed to log call.");
-    }
+  const data = {
+    employee,
+    phone,
+    outcome,
+    notes,
   };
+
+  axios.post("https://cold-call-backend.onrender.com/log", data)
+    .then((res) => {
+      setResponseMessage("Call logged successfully!");
+      setEmployee("");
+      setPhone("");
+      setOutcome("");
+      setNotes("");
+    })
+    .catch((err) => {
+      console.error("Error logging call:", err);
+    });
+};
+
 
   if (!authenticated) {
     return (
